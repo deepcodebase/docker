@@ -26,7 +26,10 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
     libibverbs1 \
     ibverbs-providers \
     zsh \
-    tzdata
+    tzdata \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/install-conda.sh \
     && chmod +x /tmp/install-conda.sh \
@@ -36,7 +39,10 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     && conda clean -y --all
 
 # Install PyTorch
-RUN pip install --no-cache-dir torch==${PYTORCH_VERSION} torchvision==${TORCHVISION_VERSION} -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip install --no-cache-dir \
+    torch==${PYTORCH_VERSION} \
+    torchvision==${TORCHVISION_VERSION} \
+    -f https://download.pytorch.org/whl/torch_stable.html
 
 ENV ZSH /usr/local/.oh-my-zsh
 RUN curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash -s -- --unattended

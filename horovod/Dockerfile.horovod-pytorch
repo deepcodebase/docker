@@ -32,7 +32,10 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
     libpng-dev \
     librdmacm1 \
     libibverbs1 \
-    ibverbs-providers
+    ibverbs-providers \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/install-conda.sh \
     && chmod +x /tmp/install-conda.sh \
