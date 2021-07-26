@@ -1,4 +1,4 @@
-FROM deepbase:/pytorch:0.4.0
+FROM deepbase/pytorch:0.4.0
 
 
 # Set default shell to /bin/bash
