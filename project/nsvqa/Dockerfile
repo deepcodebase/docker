@@ -25,6 +25,9 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
     libxext6 \
     && rm -rf /var/lib/apt/lists/*
 
+ENV ZSH /usr/local/.oh-my-zsh
+RUN curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash -s -- --unattended
+
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/install-conda.sh \
     && chmod +x /tmp/install-conda.sh \
     && /tmp/install-conda.sh -b -f -p /usr/local \
@@ -38,10 +41,7 @@ RUN git clone https://github.com/kexinyi/ns-vqa.git \
     && conda install -c conda-forge pytorch --file requirements.txt \
     && conda clean -y --all
 
-RUN cd scene_parse/mask_rcnn/lib \
+RUN cd ns-vqa/scene_parse/mask_rcnn/lib \
     && sh make.sh
-
-ENV ZSH /usr/local/.oh-my-zsh
-RUN curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash -s -- --unattended
 
 WORKDIR "/code"
