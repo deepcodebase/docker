@@ -1,4 +1,3 @@
-# build deepbase/pytorch:latest
 FROM nvidia/cuda:11.1-cudnn8-devel-ubuntu20.04
 
 ENV PYTORCH_VERSION=1.8.1+cu111
