@@ -1,4 +1,3 @@
-# build deepbase/pytorch:1.6.0
 FROM nvidia/cuda:10.2-cudnn8-devel-ubuntu18.04
 
 ENV PYTORCH_VERSION=1.6.0

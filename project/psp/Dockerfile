@@ -1,47 +1,4 @@
-FROM nvidia/cuda:11.1-cudnn8-devel-ubuntu20.04
-
-ENV PYTORCH_VERSION=1.8.1+cu111
-ENV TORCHVISION_VERSION=0.9.1+cu111
-
-ARG python=3.8
-ENV PYTHON_VERSION=${python}
-
-# Set default shell to /bin/bash
-SHELL ["/bin/bash", "-cu"]
-
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
-    build-essential \
-    cmake \
-    g++-7 \
-    git \
-    curl \
-    vim \
-    wget \
-    ca-certificates \
-    libjpeg-dev \
-    libpng-dev \
-    librdmacm1 \
-    libibverbs1 \
-    ibverbs-providers \
-    zsh \
-    tzdata \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/install-conda.sh \
-    && chmod +x /tmp/install-conda.sh \
-    && /tmp/install-conda.sh -b -f -p /usr/local \
-    && rm -f /tmp/install-conda.sh \
-    && conda install -y python=${PYTHON_VERSION} \
-    && conda clean -y --all
-
-# Install PyTorch
-RUN pip install --no-cache-dir torch==${PYTORCH_VERSION} torchvision==${TORCHVISION_VERSION} -f https://download.pytorch.org/whl/torch_stable.html
-
-ENV ZSH /usr/local/.oh-my-zsh
-RUN curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash -s -- --unattended
+FROM deepbase/pytorch:1.8.1_cu11
 
 # Install FFindex
 RUN git clone https://github.com/soedinglab/ffindex_soedinglab.git /tmp/ffindex \
