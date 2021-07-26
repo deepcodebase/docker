@@ -1,4 +1,4 @@
-FROM nvidia/9.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
 
 ENV PYTORCH_VERSION=0.4.0
 ENV TORCHVISION_VERSION=0.2.1
