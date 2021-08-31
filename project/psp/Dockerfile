@@ -36,7 +36,7 @@ RUN git clone --recursive https://github.com/soedinglab/hh-suite.git /tmp/hhsuit
     && make install\
     && rm -rf /tmp/hhsuite
 
-COPY requirements.txt /tmp
+COPY ./requirements.txt /tmp
 
 RUN pip install -r /tmp/requirements.txt \
     && rm -f /tmp/requirements.txt

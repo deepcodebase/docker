@@ -44,8 +44,8 @@ jobs:
           # file: ./project/detectron2/Dockerfile
           # tags: deepbase/project:detectron2
 
-          context: ./project/psp/
-          file: ./Dockerfile
+          context: .
+          file: ./project/psp/Dockerfile
           tags: deepbase/project:psp
 
           cache-from: type=local,src=/tmp/.buildx-cache
