@@ -38,13 +38,14 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./
           push: true
 
+          # context: ./
           # file: ./project/detectron2/Dockerfile
           # tags: deepbase/project:detectron2
 
-          file: ./project/psp/Dockerfile
+          context: ./project/psp/
+          file: Dockerfile
           tags: deepbase/project:psp
 
           cache-from: type=local,src=/tmp/.buildx-cache
