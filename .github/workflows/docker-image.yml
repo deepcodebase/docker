@@ -44,11 +44,11 @@ jobs:
           # file: ./project/detectron2/Dockerfile
           # tags: deepbase/project:detectron2
 
-          # file: ./project/psp/Dockerfile
-          # tags: deepbase/project:psp
+          file: ./project/psp/Dockerfile
+          tags: deepbase/project:psp
 
-          file: ./project/tvr/Dockerfile
-          tags: deepbase/project:tvr
+          # file: ./project/tvr/Dockerfile
+          # tags: deepbase/project:tvr
 
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
