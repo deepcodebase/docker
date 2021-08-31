@@ -38,7 +38,7 @@ RUN git clone --recursive https://github.com/soedinglab/hh-suite.git /tmp/hhsuit
 
 COPY project/psp/requirements.txt /tmp
 
-RUN pip install -r /tmp/requirements.txt \
+RUN pip install --no-cache-dir -r /tmp/requirements.txt \
     && rm -f /tmp/requirements.txt
 
 WORKDIR "/code"

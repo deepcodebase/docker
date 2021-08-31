@@ -39,14 +39,16 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
+          context: .
 
-          # context: ./
           # file: ./project/detectron2/Dockerfile
           # tags: deepbase/project:detectron2
 
-          context: .
-          file: ./project/psp/Dockerfile
-          tags: deepbase/project:psp
+          # file: ./project/psp/Dockerfile
+          # tags: deepbase/project:psp
+
+          file: ./project/tvr/Dockerfile
+          tags: deepbase/project:tvr
 
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
