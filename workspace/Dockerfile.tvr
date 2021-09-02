@@ -38,8 +38,8 @@ RUN pip --no-cache-dir install -r /tmp/requirements.txt \
 EXPOSE 8888
 
 # V2ray
-RUN wget https://github.com/v2fly/v2ray-core/releases/download/v4.41.1/v2ray-linux-64.zip -O /tmp --no-check-certificate \
-    && unzip /tmp/v2ray.zip -d /tmp/V2ray \
+RUN wget https://github.com/v2fly/v2ray-core/releases/download/v4.41.1/v2ray-linux-64.zip -O /tmp/v2ray.zip --no-check-certificate \
+    && unzip /tmp/v2ray.zip -d /tmp/v2ray \
     && mv /tmp/v2ray/v2ray /tmp/v2ray/v2ctl /usr/bin/
 
 # TUNA Mirror
