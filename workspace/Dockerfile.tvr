@@ -2,11 +2,15 @@ FROM deepbase/project:tvr
 
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
     tmux \
+    zip \
+    rsync \
+    htop \
     openssh-client \
     openssh-server \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /var/run/sshd
 
+# SSH Service
 RUN cat /etc/ssh/ssh_config | grep -v StrictHostKeyChecking > /etc/ssh/ssh_config.new && \
     echo "    StrictHostKeyChecking no" >> /etc/ssh/ssh_config.new && \
     mv /etc/ssh/ssh_config.new /etc/ssh/ssh_config &&\
@@ -14,16 +18,43 @@ RUN cat /etc/ssh/ssh_config | grep -v StrictHostKeyChecking > /etc/ssh/ssh_confi
 
 EXPOSE 22
 
+# Tmux configuration
 RUN git clone https://github.com/hughplay/tmux-config.git /tmp/tmux-config \
     && bash /tmp/tmux-config/install.sh \
     && rm -rf /tmp/tmux-config \
     && echo "set -g default-shell `which zsh`" >> ~/.tmux.conf
 
+# ZSH configuration
 RUN wget https://raw.githubusercontent.com/oskarkrawczyk/honukai-iterm/master/honukai.zsh-theme -O ${ZSH:-~/.oh-my-zsh}/themes/honukai.zsh-theme --no-check-certificate \
     && sed -i.bak '/ZSH_THEME/s/\".*\"/\"honukai\"/' ~/.zshrc \
     && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH:-~/.oh-my-zsh}/custom/plugins/zsh-autosuggestions\
     && sed -i.bak '/plugin/s/(.*)/(git zsh-autosuggestions)/' ~/.zshrc
 
-RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# Jupyter Notebook
+COPY ./workspace/prepare_jupyter.sh /root/.jupyter/prepare.sh
+COPY ./requirements.txt /tmp/requirements.txt
+RUN pip --no-cache-dir install -r /tmp/requirements.txt \
+    && chmod +x /root/.jupyter/prepare.sh && mkdir /dataset /workspace /logs /model
+EXPOSE 8888
+
+# V2ray
+RUN wget https://github.com/v2fly/v2ray-core/releases/download/v4.41.1/v2ray-linux-64.zip -O /tmp --no-check-certificate \
+    && unzip /tmp/v2ray.zip -d /tmp/V2ray \
+    && mv /tmp/v2ray/v2ray /tmp/v2ray/v2ctl /usr/bin/
+
+# TUNA Mirror
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple 
+COPY ./workspace/sources.list.ubuntu18.04 /etc/apt/sources.list
+COPY ./workspace/.condarc /root/.condarc
+
+# Basic Configuration
+ENV TZ="Asia/Shanghai"
+
+RUN chsh -s `which zsh` \
+    && ln -nfs /root/data /data \
+    && ln -nfs /workspace/logs /outputs
+
+COPY ./workspace/.localrc /root
+RUN echo '. ~/.localrc' >> ~/.zshrc
 
 WORKDIR "/code"
