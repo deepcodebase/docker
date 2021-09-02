@@ -32,7 +32,7 @@ RUN wget https://raw.githubusercontent.com/oskarkrawczyk/honukai-iterm/master/ho
 
 # Jupyter Notebook
 COPY ./workspace/prepare_jupyter.sh /root/.jupyter/prepare.sh
-COPY ./requirements.txt /tmp/requirements.txt
+COPY ./workspace/requirements.txt /tmp/
 RUN pip --no-cache-dir install -r /tmp/requirements.txt \
     && chmod +x /root/.jupyter/prepare.sh && mkdir /dataset /workspace /logs /model
 EXPOSE 8888
