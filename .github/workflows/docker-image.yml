@@ -50,11 +50,11 @@ jobs:
           # file: ./project/tvr/Dockerfile
           # tags: deepbase/project:tvr
 
-          # file: ./workspace/Dockerfile.psp
-          # tags: deepbase/workspace:psp
+          file: ./workspace/Dockerfile.psp
+          tags: deepbase/workspace:psp
 
-          file: ./workspace/Dockerfile.tvr
-          tags: deepbase/workspace:tvr
+          # file: ./workspace/Dockerfile.tvr
+          # tags: deepbase/workspace:tvr
 
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache

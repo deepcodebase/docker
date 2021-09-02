@@ -3,6 +3,7 @@ FROM deepbase/project:tvr
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
     tmux \
     zip \
+    unzip \
     rsync \
     htop \
     openssh-client \
