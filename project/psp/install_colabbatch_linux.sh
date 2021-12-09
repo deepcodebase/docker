@@ -1,4 +1,6 @@
 #!/bin/bash
+# https://github.com/YoshitakaMo/localcolabfold/blob/main/install_colabbatch_linux.sh
+# 5b166c1
 
 type wget || { echo "wget command is not installed. Please install it at first using apt or yum." ; exit 1 ; }
 type curl || { echo "curl command is not installed. Please install it at first using apt or yum. " ; exit 1 ; }
@@ -12,7 +14,7 @@ wget https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c
 conda create -p $COLABFOLDDIR/colabfold-conda python=3.7 -y
 conda activate $COLABFOLDDIR/colabfold-conda
 conda update -n base conda -y
-conda install -c conda-forge python=3.7 cudnn==8.2.1.32 cudatoolkit==11.1.1 openmm==7.5.1 pdbfixer -y
+conda install -c conda-forge python=3.7 openmm==7.5.1 pdbfixer -y
 # patch to openmm
 wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openmm.patch --no-check-certificate
 (cd ${COLABFOLDDIR}/colabfold-conda/lib/python3.7/site-packages; patch -s -p0 < ${COLABFOLDDIR}/openmm.patch)
