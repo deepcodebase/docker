@@ -56,3 +56,4 @@ echo "For more details, please type 'colabfold_batch --help'."
 conda remove cudatoolkit -y
 conda clean -y --all
 conda deactivate
+exit 0
