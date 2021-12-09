@@ -36,10 +36,19 @@ RUN git clone --recursive https://github.com/soedinglab/hh-suite.git /tmp/hhsuit
     && make install\
     && rm -rf /tmp/hhsuite
 
+# Install HMMER
+RUN mkdir /tmp/hmmer \
+    && cd /tmp/hmmer \
+    && wget -O hmmer-3.3.2.tar.gz http://eddylab.org/software/hmmer/hmmer-3.3.2.tar.gz \
+    && tar xvzf hhmer-3.3.2.tar.gz \
+    && cd hmmer-3.3.2 \
+    && ./configure --prefix /usr/local \
+    && make \
+    && make install
+
 COPY project/psp/requirements.txt /tmp
 
 RUN pip install --no-cache-dir -r /tmp/requirements.txt \
     && rm -f /tmp/requirements.txt
-
 
 WORKDIR "/code"
