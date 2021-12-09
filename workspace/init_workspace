@@ -3,5 +3,5 @@ sudo cp -r /root/.conda /root/.condarc /root/.tmux /root/.tmux.conf /root/.zshrc
 sudo chown -R $USER:$USER $HOME/.*
 sudo chsh -s `which zsh` $USER
 conda init zsh bash
-sudo usermod -aG docker $USER
+#sudo usermod -aG docker $USER
 
