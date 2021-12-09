@@ -13,7 +13,7 @@ cd ${COLABFOLDDIR}
 wget https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt --no-check-certificate
 conda create -p $COLABFOLDDIR/colabfold-conda python=3.7 -y
 conda activate $COLABFOLDDIR/colabfold-conda
-conda update -n base conda -y
+#conda update -n base conda -y
 conda install -c conda-forge python=3.7 openmm==7.5.1 pdbfixer -y
 # patch to openmm
 wget -qnc https://raw.githubusercontent.com/deepmind/alphafold/main/docker/openmm.patch --no-check-certificate
