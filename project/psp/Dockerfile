@@ -46,6 +46,12 @@ RUN mkdir /tmp/hmmer \
     && make \
     && make install
 
+# Install LocalColabFold
+WORKDIR "/tool"
+COPY project/psp/install_colabbatch_linux.sh /tool
+RUN bash install_colabbatch_linux.sh
+
+# Install python packages
 COPY project/psp/requirements.txt /tmp
 
 RUN pip install --no-cache-dir -r /tmp/requirements.txt \
