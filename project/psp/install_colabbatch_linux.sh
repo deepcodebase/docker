@@ -24,8 +24,8 @@ wget -qnc https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/upda
 # install alignment tools
 conda install -c conda-forge -c bioconda kalign3=3.2.2 hhsuite=3.3.0 -y
 # install ColabFold and Jaxlib
-colabfold-conda/bin/python3.7 -m pip install "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-colabfold-conda/bin/python3.7 -m pip install https://storage.googleapis.com/jax-releases/cuda111/jaxlib-0.1.72+cuda111-cp37-none-manylinux2010_x86_64.whl
+colabfold-conda/bin/python3.7 -m pip install --no-cache-dir "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
+colabfold-conda/bin/python3.7 -m pip install --no-cache-dir https://storage.googleapis.com/jax-releases/cuda111/jaxlib-0.1.72+cuda111-cp37-none-manylinux2010_x86_64.whl
 
 # bin directory to run
 mkdir -p $COLABFOLDDIR/bin
@@ -52,3 +52,5 @@ echo "Note: AlphaFold2 weight parameters will be downloaded at ${COLABFOLDDIR}/c
 echo "Please set your PATH to ${COLABFOLDDIR}/bin to run 'colabfold_batch'."
 echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/bin:\$PATH\""
 echo "For more details, please type 'colabfold_batch --help'."
+
+conda clean -y --all
