@@ -53,4 +53,6 @@ echo "Please set your PATH to ${COLABFOLDDIR}/bin to run 'colabfold_batch'."
 echo "i.e. For Bash, export PATH=\"${COLABFOLDDIR}/bin:\$PATH\""
 echo "For more details, please type 'colabfold_batch --help'."
 
+conda remove cudatoolkit -y
 conda clean -y --all
+conda deactivate
