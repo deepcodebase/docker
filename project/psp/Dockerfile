@@ -47,10 +47,9 @@ RUN mkdir /tmp/hmmer \
     && make install
 
 # Install LocalColabFold
-WORKDIR "/tool"
-RUN conda init bash
-COPY project/psp/install_colabbatch_linux.sh /tool
-RUN bash install_colabbatch_linux.sh
+#WORKDIR "/tool"
+#COPY project/psp/install_colabbatch_linux.sh /tool
+#RUN bash install_colabbatch_linux.sh
 
 # Install python packages
 COPY project/psp/requirements.txt /tmp
