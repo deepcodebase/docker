@@ -40,7 +40,7 @@ RUN git clone --recursive https://github.com/soedinglab/hh-suite.git /tmp/hhsuit
 RUN mkdir /tmp/hmmer \
     && cd /tmp/hmmer \
     && wget -O hmmer-3.3.2.tar.gz http://eddylab.org/software/hmmer/hmmer-3.3.2.tar.gz \
-    && tar xvzf hhmer-3.3.2.tar.gz \
+    && tar xvzf hmmer-3.3.2.tar.gz \
     && cd hmmer-3.3.2 \
     && ./configure --prefix /usr/local \
     && make \
