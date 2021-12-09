@@ -9,16 +9,32 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
     language-pack-en \
     openssh-client \
     openssh-server \
+    nethogs \
+    sysstat \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+
+# Install Docker
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+    | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
+    && echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null \
+    && apt-get install docker-ce docker-ce-cli containerd.io \
+    && groupadd docker
+
+# Install Tmux
+RUN apt-get install -y libevent-dev ncurses-dev \
+    && cd /tmp \
+    && wget -O tmux-2.8.tar.gz https://github.com/tmux/tmux/archive/2.8.tar.gz \
+    && tar zxvf tmux-2.8.tar.gz \
+    && cd tmux-2.8 \
+    && ./autogen.sh \
+    && ./configure --prefix=/usr/local \
+    && make \
+    && make install \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /var/run/sshd
-
-# SSH Service
-RUN cat /etc/ssh/ssh_config | grep -v StrictHostKeyChecking > /etc/ssh/ssh_config.new && \
-    echo "    StrictHostKeyChecking no" >> /etc/ssh/ssh_config.new && \
-    mv /etc/ssh/ssh_config.new /etc/ssh/ssh_config &&\
-    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-
-EXPOSE 22
 
 # Tmux configuration
 RUN git clone https://github.com/hughplay/tmux-config.git /tmp/tmux-config \
@@ -31,13 +47,6 @@ RUN wget https://raw.githubusercontent.com/oskarkrawczyk/honukai-iterm/master/ho
     && sed -i.bak '/ZSH_THEME/s/\".*\"/\"honukai\"/' ~/.zshrc \
     && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH:-~/.oh-my-zsh}/custom/plugins/zsh-autosuggestions\
     && sed -i.bak '/plugin/s/(.*)/(git zsh-autosuggestions)/' ~/.zshrc
-
-# Jupyter Notebook
-COPY ./workspace/prepare_jupyter.sh /root/.jupyter/prepare.sh
-COPY ./workspace/requirements.txt /tmp/
-RUN pip --no-cache-dir install -r /tmp/requirements.txt \
-    && chmod +x /root/.jupyter/prepare.sh && mkdir /dataset /workspace /logs /model
-EXPOSE 8888
 
 # V2ray
 RUN wget https://github.com/v2fly/v2ray-core/releases/download/v4.41.1/v2ray-linux-64.zip -O /tmp/v2ray.zip --no-check-certificate \
@@ -52,11 +61,11 @@ COPY ./workspace/.condarc /root/.condarc
 # Basic Configuration
 ENV TZ="Asia/Shanghai"
 
-RUN chsh -s `which zsh` \
-    && ln -nfs /root/data /data \
-    && ln -nfs /workspace/logs /outputs
+RUN chsh -s `which zsh`
 
 COPY ./workspace/.localrc /root
 RUN echo '. ~/.localrc' >> ~/.zshrc
+
+COPY ./workspace/init_workspace /usr/local/bin
 
 WORKDIR "/code"

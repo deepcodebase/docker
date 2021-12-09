@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+sudo cp -r /root/.conda /root/.condarc /root/.tmux /root/.tmux.conf /root/.zshrc /root/.local /root/.localrc $HOME
+sudo chown -R $USER:$USER $HOME/.*
+sudo chsh -s `which zsh` $USER
+conda init zsh bash
+sudo usermod -aG docker $USER
+
