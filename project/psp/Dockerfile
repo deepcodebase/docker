@@ -48,7 +48,7 @@ RUN mkdir /tmp/hmmer \
 
 # Install LocalColabFold
 WORKDIR "/tool"
-RUN conda init bash && . ~/.bashrc
+RUN conda init bash
 COPY project/psp/install_colabbatch_linux.sh /tool
 RUN bash install_colabbatch_linux.sh
 
