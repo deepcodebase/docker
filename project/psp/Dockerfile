@@ -55,6 +55,16 @@ RUN mkdir /tmp/blast \
     && cp ncbi-blast-2.13.0+/bin/* /usr/local/bin/ \
     && rm -rf /tmp/blast
 
+# Install MMseqs2
+RUN git clone https://github.com/soedinglab/MMseqs2.git /tmp/ \
+    && cd /tmp/MMseqs2 \
+    && mkdir build \
+    && cd build \
+    && cmake -DCMAKE_BUILD_TYPE=RELEASE .. \
+    && make \
+    && make install \
+    && rm -rf /tmp/MMseqs2
+
 # Install TM-align 
 RUN mkdir /tmp/align \
     && cd /tmp/align \
