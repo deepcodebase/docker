@@ -70,6 +70,7 @@ RUN mkdir /tmp/align \
 RUN mkdir /tmp/kalign \
     && cd /tmp/kalign \
     && wget http://msa.sbc.su.se/downloads/kalign/current.tar.gz \
+    && tar zxvf current.tar.gz \
     && ./configure \
     && make \
     && make install \
