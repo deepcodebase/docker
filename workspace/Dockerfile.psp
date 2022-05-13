@@ -31,7 +31,7 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Tmux
-RUN apt-get install -y libevent-dev ncurses-dev automake pkg-config \
+RUN apt-get update && apt-get install -y libevent-dev ncurses-dev automake pkg-config \
     && cd /tmp \
     && wget -O tmux-2.8.tar.gz https://github.com/tmux/tmux/archive/2.8.tar.gz \
     && tar zxvf tmux-2.8.tar.gz \
