@@ -47,14 +47,8 @@ jobs:
           # file: ./project/psp/Dockerfile
           # tags: deepbase/project:psp
 
-          file: ./project/psp/Dockerfile
-          tags: deepbase/project:psp
-
-          # file: ./workspace/Dockerfile.psp
-          # tags: deepbase/workspace:psp
-
-          #file: ./workspace/Dockerfile.psp
-          #tags: deepbase/workspace:psp
+          file: ./workspace/Dockerfile.psp
+          tags: deepbase/workspace:psp
 
           # file: ./workspace/Dockerfile.tvr
           # tags: deepbase/workspace:tvr
