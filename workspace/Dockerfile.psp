@@ -12,16 +12,19 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
     sysstat \
     ca-certificates \
     gnupg \
-    lsb-release
+    lsb-release \
+    vmtouch \
+    sudo \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Docker
-#RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-#    | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
-#    && echo \
-#    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-#    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null \
-#    && apt-get install docker-ce docker-ce-cli containerd.io \
-#    && groupadd docker
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+    | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
+    && echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null \
+    && apt-get install docker-ce docker-ce-cli containerd.io \
+    && groupadd docker
 
 # Install Tmux
 RUN apt-get install -y libevent-dev ncurses-dev automake pkg-config \
@@ -47,6 +50,9 @@ RUN wget https://raw.githubusercontent.com/oskarkrawczyk/honukai-iterm/master/ho
     && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH:-~/.oh-my-zsh}/custom/plugins/zsh-autosuggestions\
     && sed -i.bak '/plugin/s/(.*)/(git zsh-autosuggestions)/' ~/.zshrc
 
+# Install lightvim
+# RUN wget https://raw.githubusercontent.com/hughplay/lightvim/master/install.sh -O - | sh
+
 # V2ray
 RUN wget https://github.com/v2fly/v2ray-core/releases/download/v4.41.1/v2ray-linux-64.zip -O /tmp/v2ray.zip --no-check-certificate \
     && unzip /tmp/v2ray.zip -d /tmp/v2ray \
@@ -64,7 +70,5 @@ RUN chsh -s `which zsh`
 
 COPY ./workspace/.localrc /root
 RUN echo '. ~/.localrc' >> ~/.zshrc
-
-COPY ./workspace/init_workspace /usr/local/bin
 
 WORKDIR "/code"
