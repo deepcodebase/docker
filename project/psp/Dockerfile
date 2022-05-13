@@ -44,12 +44,36 @@ RUN mkdir /tmp/hmmer \
     && cd hmmer-3.3.2 \
     && ./configure --prefix /usr/local \
     && make \
-    && make install
+    && make install \
+    && rm -rf /tmp/hmmer
 
-# Install LocalColabFold
-#WORKDIR "/tool"
-#COPY project/psp/install_colabbatch_linux.sh /tool
-#RUN bash install_colabbatch_linux.sh
+# Install BLAST
+RUN mkdir /tmp/blast \
+    && cd /tmp/blast \
+    &&  wget -O ncbi-blast-2.13.0+-x64-linux.tar.gz https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.13.0+-x64-linux.tar.gz \
+    && tar zxvf ncbi-blast-2.13.0+-x64-linux.tar.gz \
+    && cp ncbi-blast-2.13.0+/bin/* /usr/local/bin/ \
+    && rm -rf /tmp/blast
+
+# Install TM-align 
+RUN mkdir /tmp/align \
+    && cd /tmp/align \
+    && wget https://zhanggroup.org/TM-align/TMalign.cpp \
+    && g++ -static -O3 -ffast-math -lm -o TMalign TMalign.cpp \
+    && cp TMalign /usr/local/bin/ \
+    && wget https://zhanggroup.org/US-align/bin/module/USalign.cpp \
+    && g++ -static -O3 -ffast-math -o USalign USalign.cpp \
+    && cp USalign /usr/local/bin/ \
+    && rm -rf /tmp/align
+
+# Install kalign
+RUN mkdir /tmp/kalign \
+    && cd /tmp/kalign \
+    && wget http://msa.sbc.su.se/downloads/kalign/current.tar.gz \
+    && ./configure \
+    && make \
+    && make install \
+    && rm -rf /tmp/kalign
 
 # Install python packages
 COPY project/psp/requirements.txt /tmp
