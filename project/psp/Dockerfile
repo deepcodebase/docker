@@ -90,7 +90,7 @@ RUN git clone https://github.com/mhekkel/mrc.git /tmp/mrc \
     && mkdir build \
     && cd build \
     && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
-    && cmake --install \
+    && cmake --install . \
     && rm -rf /tmp/mrc
 
 # Install libcf++ (for DSSP)
