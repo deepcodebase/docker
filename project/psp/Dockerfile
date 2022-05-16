@@ -76,6 +76,20 @@ RUN mkdir /tmp/kalign \
     && make install \
     && rm -rf /tmp/kalign
 
+# Install boost (for libcf++)
+RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
+    libboost-all-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install mrc (for libcf++)
+RUN git clone https://github.com/mhekkel/mrc.git /tmp/mrc \
+    && cd /tmp/mrc \
+    && mkdir build \
+    && cd build \
+    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
+    && cmake --install \
+    && rm -rf /tmp/mrc
+
 # Install libcf++ (for DSSP)
 RUN git clone https://github.com/PDB-REDO/libcifpp.git /tmp/libcifpp \
     && cd /tmp/libcifpp \
@@ -95,7 +109,8 @@ RUN git clone https://github.com/PDB-REDO/dssp.git /tmp/dssp \
     && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
     && cmake --build . --config Release \
     && ctest -C Release \
-    && cmake --install .
+    && cmake --install . \
+    && rm -rf /tmp/dssp
 
 # Install python packages
 COPY project/psp/requirements.txt /tmp
