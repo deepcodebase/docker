@@ -1,5 +1,8 @@
 FROM deepbase/pytorch:1.8.1_cu11
 
+# the public key of nvidia signing keys seems to be changed
+RUN rm -f /etc/apt/sources.list.d/*
+
 # Install FFindex
 RUN git clone https://github.com/soedinglab/ffindex_soedinglab.git /tmp/ffindex \
     && mkdir /tmp/ffindex/build \

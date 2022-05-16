@@ -1,8 +1,5 @@
 FROM deepbase/project:psp
 
-# the public key of nvidia signing keys seems to be changed
-RUN rm -f /etc/apt/sources.list.d/*
-
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
     zip \
     unzip \
