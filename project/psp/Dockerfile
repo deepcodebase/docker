@@ -90,7 +90,8 @@ RUN git clone https://github.com/mhekkel/mrc.git /tmp/mrc \
     && mkdir build \
     && cd build \
     && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
-    && cmake --install . \
+    && make \
+    && make install \
     && rm -rf /tmp/mrc
 
 # Install libcf++ (for DSSP)
@@ -99,9 +100,8 @@ RUN git clone https://github.com/PDB-REDO/libcifpp.git /tmp/libcifpp \
     && mkdir build \
     && cd build \
     && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
-    && cmake --build . --config Release \
-    && ctest -C Release \
-    && cmake --install . \
+    && make \
+    && make install \
     && rm -rf /tmp/libcifpp
 
 # Install DSSP
@@ -110,9 +110,8 @@ RUN git clone https://github.com/PDB-REDO/dssp.git /tmp/dssp \
     && mkdir build \
     && cd build \
     && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
-    && cmake --build . --config Release \
-    && ctest -C Release \
-    && cmake --install . \
+    && make \
+    && make install \
     && rm -rf /tmp/dssp
 
 # Install python packages
