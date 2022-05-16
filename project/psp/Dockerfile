@@ -76,6 +76,27 @@ RUN mkdir /tmp/kalign \
     && make install \
     && rm -rf /tmp/kalign
 
+# Install libcf++ (for DSSP)
+RUN git clone https://github.com/PDB-REDO/libcifpp.git /tmp/libcifpp \
+    && cd /tmp/libcifpp \
+    && mkdir build \
+    && cd build \
+    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
+    && cmake --build . --config Release \
+    && ctest -C Release \
+    && cmake --install . \
+    && rm -rf /tmp/libcifpp
+
+# Install DSSP
+RUN git clone https://github.com/PDB-REDO/dssp.git /tmp/dssp \
+    && cd /tmp/dssp \
+    && mkdir build \
+    && cd build \
+    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
+    && cmake --build . --config Release \
+    && ctest -C Release \
+    && cmake --install .
+
 # Install python packages
 COPY project/psp/requirements.txt /tmp
 
