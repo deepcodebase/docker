@@ -12,20 +12,6 @@ RUN git clone https://github.com/soedinglab/ffindex_soedinglab.git /tmp/ffindex 
     && make install \
     && rm -rf /tmp/ffindex
 
-# Install MMseqs2
-#RUN git clone https://github.com/soedinglab/MMseqs2.git /tmp/MMseqs2 \
-#    && mkdir /tmp/MMseqs2/build \
-#    && cd /tmp/MMseqs2/build \
-#    && cmake -DHAVE_AVX2=1 -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/usr/local .. \
-#    && make \
-#    && make install\
-#    && rm -rf /tmp/MMseqs2
-RUN cd /tmp \
-    && wget https://mmseqs.com/latest/mmseqs-linux-avx2.tar.gz \
-    && tar xvfz mmseqs-linux-avx2.tar.gz \
-    && cp -r mmseqs/bin/* /usr/local/bin/ \
-    && rm -rf /tmp/mmseqs
-
 # Install CCMpred
 RUN git clone --recursive https://github.com/soedinglab/CCMpred.git /tmp/CCMpred \
     && mkdir /tmp/CCMpred/build \
@@ -84,40 +70,58 @@ RUN mkdir /tmp/kalign \
     && make install \
     && rm -rf /tmp/kalign
 
+# Install MMseqs2
+#RUN git clone https://github.com/soedinglab/MMseqs2.git /tmp/MMseqs2 \
+#    && mkdir /tmp/MMseqs2/build \
+#    && cd /tmp/MMseqs2/build \
+#    && cmake -DHAVE_AVX2=1 -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/usr/local .. \
+#    && make \
+#    && make install\
+#    && rm -rf /tmp/MMseqs2
+RUN cd /tmp \
+    && wget https://mmseqs.com/latest/mmseqs-linux-avx2.tar.gz \
+    && tar xvfz mmseqs-linux-avx2.tar.gz \
+    && cp -r mmseqs/bin/* /usr/local/bin/ \
+    && rm -rf /tmp/mmseqs
+
 # Install boost (for libcf++)
-RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
-    libboost-all-dev \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
+#    libboost-all-dev \
+#    && rm -rf /var/lib/apt/lists/*
+#
+## Install mrc (for libcf++)
+#RUN git clone https://github.com/mhekkel/mrc.git /tmp/mrc \
+#    && cd /tmp/mrc \
+#    && mkdir build \
+#    && cd build \
+#    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
+#    && make \
+#    && make install \
+#    && rm -rf /tmp/mrc
+#
+## Install libcf++ (for DSSP)
+#RUN git clone https://github.com/PDB-REDO/libcifpp.git /tmp/libcifpp \
+#    && cd /tmp/libcifpp \
+#    && mkdir build \
+#    && cd build \
+#    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
+#    && make \
+#    && make install \
+#    && rm -rf /tmp/libcifpp
+#
+## Install DSSP
+#RUN git clone https://github.com/PDB-REDO/dssp.git /tmp/dssp \
+#    && cd /tmp/dssp \
+#    && mkdir build \
+#    && cd build \
+#    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
+#    && make \
+#    && make install \
+#    && rm -rf /tmp/dssp
 
-# Install mrc (for libcf++)
-RUN git clone https://github.com/mhekkel/mrc.git /tmp/mrc \
-    && cd /tmp/mrc \
-    && mkdir build \
-    && cd build \
-    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
-    && make \
-    && make install \
-    && rm -rf /tmp/mrc
-
-# Install libcf++ (for DSSP)
-RUN git clone https://github.com/PDB-REDO/libcifpp.git /tmp/libcifpp \
-    && cd /tmp/libcifpp \
-    && mkdir build \
-    && cd build \
-    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
-    && make \
-    && make install \
-    && rm -rf /tmp/libcifpp
-
-# Install DSSP
-RUN git clone https://github.com/PDB-REDO/dssp.git /tmp/dssp \
-    && cd /tmp/dssp \
-    && mkdir build \
-    && cd build \
-    && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. \
-    && make \
-    && make install \
-    && rm -rf /tmp/dssp
+# Install alignment tools: Clustal-Omega, EMBOSS
+RUN conda install -c bioconda clustalo emboss probcons \
+    && conda clean -a -y
 
 # Install python packages
 COPY project/psp/requirements.txt /tmp
