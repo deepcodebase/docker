@@ -123,10 +123,4 @@ RUN cd /tmp \
 RUN conda install -c bioconda clustalo emboss probcons \
     && conda clean -a -y
 
-# Install python packages
-COPY project/psp/requirements.txt /tmp
-
-RUN pip install --no-cache-dir -r /tmp/requirements.txt \
-    && rm -f /tmp/requirements.txt
-
 WORKDIR "/code"
