@@ -61,12 +61,22 @@ RUN mkdir /tmp/align \
     && rm -rf /tmp/align
 
 # Install kalign
-RUN mkdir /tmp/kalign \
+#RUN mkdir /tmp/kalign \
+#    && cd /tmp/kalign \
+#    && wget http://msa.sbc.su.se/downloads/kalign/current.tar.gz \
+#    && tar zxvf current.tar.gz \
+#    && ./configure \
+#    && make \
+#    && make install \
+#    && rm -rf /tmp/kalign
+
+# Install kalign 3
+RUN git clone https://github.com/TimoLassmann/kalign.git /tmp/kalign \
     && cd /tmp/kalign \
-    && wget http://msa.sbc.su.se/downloads/kalign/current.tar.gz \
-    && tar zxvf current.tar.gz \
+    && ./autogen.sh \
     && ./configure \
     && make \
+    && make check \
     && make install \
     && rm -rf /tmp/kalign
 
