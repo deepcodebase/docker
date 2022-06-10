@@ -3,6 +3,12 @@ FROM deepbase/pytorch:1.8.1_cu11
 # the public key of nvidia signing keys seems to be changed
 RUN rm -f /etc/apt/sources.list.d/*
 
+RUN apt-get update
+
+# Install vmtouch
+RUN apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
+    vmtouch
+
 # Install FFindex
 RUN git clone https://github.com/soedinglab/ffindex_soedinglab.git /tmp/ffindex \
     && mkdir /tmp/ffindex/build \
@@ -70,6 +76,10 @@ RUN mkdir /tmp/align \
 #    && make install \
 #    && rm -rf /tmp/kalign
 
+# Install libtool (for kalign 3)
+RUN apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
+    libtool
+
 # Install kalign 3
 RUN git clone https://github.com/TimoLassmann/kalign.git /tmp/kalign \
     && cd /tmp/kalign \
@@ -129,8 +139,10 @@ RUN cd /tmp \
 #    && make install \
 #    && rm -rf /tmp/dssp
 
-# Install alignment tools: Clustal-Omega, EMBOSS
+# Install alignment tools: Clustal-Omega, EMBOSS, ProbCons
 RUN conda install -c bioconda clustalo emboss probcons \
     && conda clean -a -y
+
+RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR "/code"
