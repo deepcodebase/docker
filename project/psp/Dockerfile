@@ -7,6 +7,8 @@ RUN apt-get update
 
 # Install vmtouch
 RUN apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
+    autotools-dev \
+    automake \
     vmtouch
 
 # Install FFindex
