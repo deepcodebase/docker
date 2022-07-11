@@ -23,7 +23,7 @@ ENV LC_ALL C.UTF-8
 
 
 # TUNA Mirror (optional)
-COPY project/codebase/misc/sources.list.ubuntu20.04 /etc/apt/sources.list
+# COPY project/codebase/misc/sources.list.ubuntu20.04 /etc/apt/sources.list
 
 
 # Install basic packages for compiling and building
