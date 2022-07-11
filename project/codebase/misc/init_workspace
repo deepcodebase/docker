@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+
+USER=$USER
+HOME=$HOME
+
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --user) USER="$2"; shift ;;
+        --home) HOME="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+echo "Current User: $USER, Current Home: $HOME"
+
+echo "Copy conda, tmux, zsh, vim configurations into $HOME..."
+sudo rsync -ai --chown=$USER:$USER /root/.conda /root/.condarc /root/.tmux /root/.tmux.conf /root/.zshrc /root/.localrc $HOME
+
+echo "Use zsh."
+sudo chsh -s `which zsh` $USER
+
+echo "Initialize conda."
+conda init zsh bash
+
+echo "----------------------------------------------------"
+echo "- Enjoy the new environment!                       -"
+echo "- Contact @hughplay if you encounter any problems. -"
+echo "----------------------------------------------------"
