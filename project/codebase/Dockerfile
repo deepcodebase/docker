@@ -1,19 +1,26 @@
 # ==================================================
-# Based on cuda11.1-cudnn8-devel-ubuntu20.04
+# Dockerfile for building: deepbase/project:codebase
 #
-# You can find other base images from:
+# This image can be found in docker hub:
+# https://hub.docker.com/r/deepbase/project/tags
+# ==================================================
+
+# ==================================================
+# *Based on cuda11.1-cudnn8-devel-ubuntu20.04
+#
+# Other base images are listed in:
 # https://hub.docker.com/r/nvidia/cuda/tags
 #
 # The version of some basic packages:
 #   - Python: 3.8
 #   - Pytorch: 1.8.2
 #
-# You can change these versions by yourself if needed.
+# Change these versions by yourself if needed.
 # ==================================================
 FROM nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
 
 
-# Set default shell to /bin/bash
+# Set default RUN shell to /bin/bash
 SHELL ["/bin/bash", "-cu"]
 
 
@@ -109,6 +116,8 @@ RUN chsh -s `which zsh` \
     && sed -i.bak '/ZSH_THEME/s/\".*\"/\"honukai\"/' ~/.zshrc \
     && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH:-~/.oh-my-zsh}/custom/plugins/zsh-autosuggestions\
     && sed -i.bak '/plugin/s/(.*)/(git zsh-autosuggestions)/' ~/.zshrc
+# make the color of zsh-autosuggestions right
+ENV TERM=xterm-256color
 
 
 # Install docker (to make docker in docker work)
