@@ -116,8 +116,9 @@ RUN chsh -s `which zsh` \
     && sed -i.bak '/ZSH_THEME/s/\".*\"/\"honukai\"/' ~/.zshrc \
     && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH:-~/.oh-my-zsh}/custom/plugins/zsh-autosuggestions\
     && sed -i.bak '/plugin/s/(.*)/(git zsh-autosuggestions)/' ~/.zshrc
+
 # make the color of zsh-autosuggestions right
-ENV TERM=xterm-256color
+ENV TERM xterm-256color
 
 
 # Install docker (to make docker in docker work)
