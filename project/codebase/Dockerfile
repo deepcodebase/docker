@@ -68,7 +68,7 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 # Install Pytorch LTS (1.8.2)
 # you can find other versions and installation commands from:
 # https://pytorch.org/get-started/previous-versions/
-RUN pip install \
+RUN pip install --no-cache-dir \
     torch==1.8.2 \
     torchvision==0.9.2 \
     torchaudio==0.8.2 \
