@@ -51,6 +51,7 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
     tzdata \
     libgl1-mesa-glx \
     libglib2.0-0 \
+    fontconfig \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -153,4 +154,20 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
 
 # Install lightvim, a configuration for vim
 # RUN wget https://raw.githubusercontent.com/hughplay/lightvim/master/install.sh -O - | sh
+
+# ==================================================
+# Fonts installation
+# 
+# Install fonts that are commonly used in plotting.
+# Question: "Which font looks best in a scientific figure?"
+# Answer: "Arial or Helvetica, always."
+# https://pubs.acs.org/doi/10.1021/acs.chemmater.6b00306
+# ==================================================
+
+RUN cd /tmp \
+    && wget https://github.com/hughplay/memo/raw/master/code/snippet/drawing/plot_fonts.tar.gz \
+    && tar zxvf plot_fonts.tar.gz \
+    && cp plot_fonts/* /usr/share/fonts/truetype/ \
+    && rm -rf plot_fonts.tar.gz plot_fonts \
+    && fc-cache -fv
 
