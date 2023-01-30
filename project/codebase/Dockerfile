@@ -60,7 +60,7 @@ ARG python=3.8
 ENV PYTHON_VERSION=${python}
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/install-conda.sh \
     && chmod +x /tmp/install-conda.sh \
-    && /tmp/install-conda.sh -b -f -p /usr/local \
+    && bash /tmp/install-conda.sh -b -f -p /usr/local \
     && rm -f /tmp/install-conda.sh \
     && conda install -y python=${PYTHON_VERSION} \
     && conda clean -y --all
