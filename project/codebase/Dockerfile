@@ -107,6 +107,7 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
     gnupg \
     lsb-release \
     sudo \
+    openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
 
