@@ -44,8 +44,8 @@ jobs:
           # file: ./project/detectron2/Dockerfile
           # tags: deepbase/project:detectron2
 
-          file: ./project/codebase/Dockerfile
-          tags: deepbase/project:codebase
+          file: ./project/codebase/Dockerfile.drug
+          tags: deepbase/project:drug
 
           # file: ./workspace/Dockerfile.tvr
           # tags: deepbase/workspace:tvr
