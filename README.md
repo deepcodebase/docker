@@ -1,5 +1,7 @@
 # Docker Blocks
 
+**Deprecated! Please check [Dockerlab](https://github.com/hughplay/dockerlab)**
+
 Docker make coding life simple.
 
 [![Docker Building](https://github.com/deepcodebase/docker/actions/workflows/docker-image.yml/badge.svg)](https://github.com/deepcodebase/docker/actions/workflows/docker-image.yml)
